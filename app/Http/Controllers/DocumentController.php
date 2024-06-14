@@ -29,7 +29,8 @@ class DocumentController extends Controller
         $data = [];
         foreach(Document::where('user_id', $user_id)->get() as $doc)
         {
-            $data[] = $doc->info_folder;
+            
+           if(!$doc->parent_id) $data[] = $doc->info_folder;
         }
 
         return response()->json($data);
