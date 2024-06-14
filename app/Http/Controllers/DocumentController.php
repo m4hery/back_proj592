@@ -44,7 +44,8 @@ class DocumentController extends Controller
         $vs = Validator::make($request->all(), [
             'name' => 'required',
             'type' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'file' => 'nullable|file|mimes:png,jpg,jpeg,pdf,docx,xlsx,txt,zip'
         ]);
         $document = new DocumentBuilder();
         if($request->hasFile('file')){

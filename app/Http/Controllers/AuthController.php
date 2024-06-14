@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -11,10 +13,11 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (auth()->attempt($credentials)) {
-            $user = auth()->user();
+            $user = User::where('email', $request->email)->first();
+            $token = JWT::encode($user,env('JWT_SECRET'), 'HS256');
 
             return response()->json([
-                'user' => $user
+                'token' => $token
             ]);
         }
 

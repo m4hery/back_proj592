@@ -33,7 +33,7 @@ class Document extends Model
     public function getinfoFolderAttribute()
     {
         $data = [];
-        $data = $this;
+        $data = $this->toArray();
         if($this->enfants)
         {
             foreach($this->enfants as $enfant)
