@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Exam Design',
             'email' => 'design@pattern.exam',
-            'password' => Hash::make("milay_ny_design_pattern")
+            'password' => Hash::make("milay_ny_design_pattern"), 
+            'role' => 'administrateur'
         ]);
     }
 }
