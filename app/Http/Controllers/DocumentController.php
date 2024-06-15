@@ -27,13 +27,24 @@ class DocumentController extends Controller
     {
         $user_id = $request->get("user_id");
         $data = [];
-        foreach(Document::where('user_id', $user_id)->get() as $doc)
+        foreach(Document::all() as $doc)
         {
             
            if(!$doc->parent_id) $data[] = $doc->info_folder;
         }
 
         return response()->json($data);
+    }
+
+    public function show($id)
+    {
+        $document = Document::where('id', $id)->first();
+    
+        return response()->json([
+            'status' => 'OK',
+            '$document' => $document->info_folder
+        ]);
+
     }
 
     /**
@@ -83,6 +94,10 @@ class DocumentController extends Controller
 
     public function update(Document $document, Request $request)
     {
+        $vs = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        
         $document->name = $request->name;
         $document->save();
 
@@ -107,5 +122,14 @@ class DocumentController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function deleteForce($id)
+    {
+        $doc = Document::withTrashed()->where('id', $id)->first()->forceDelete();
+
+        return response()->json([
+            'message' => 'Supprime definitive'
+        ]);
     }
 }

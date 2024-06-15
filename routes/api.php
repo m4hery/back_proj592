@@ -24,9 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login']);
 Route::prefix('document')->controller(DocumentController::class)->group(function () {
     Route::get('/', 'get');
+    Route::get('/{id}', 'show');
     Route::get('/arvhives', 'getArchives');
     Route::post("/create", 'store');
     Route::post('clone/{document}', 'clone');
     Route::put('update/{document}', 'update');
     Route::delete('delete/{document}', 'destoy');
+    Route::delete('suppr-definitive/{id}', 'deleteForce');
 });
